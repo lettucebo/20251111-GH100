@@ -65,17 +65,13 @@
 
 ## 🤝 貢獻指南
 
-歡迎提出問題、建議或貢獻程式碼！請遵循以下步驟：
+歡迎提出問題、建議或貢獻程式碼！
 
-1. Fork 此專案
-2. 建立您的功能分支 (`git checkout -b feature/AmazingFeature`)
-3. 提交您的變更 (`git commit -m 'Add some AmazingFeature'`)
-4. 推送到分支 (`git push origin feature/AmazingFeature`)
-5. 開啟一個 Pull Request
+詳細的貢獻指南與規範，請參閱 [CONTRIBUTING.md](CONTRIBUTING.md) 文件。
 
 ## 📝 授權
 
-本專案採用開放原始碼授權，詳細資訊請參閱 LICENSE 檔案。
+本專案採用開放原始碼授權。
 
 ## 📧 聯絡資訊
 
