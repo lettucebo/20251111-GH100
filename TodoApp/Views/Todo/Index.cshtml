@@ -1,0 +1,99 @@
+@model IEnumerable<TodoApp.Models.TodoItem>
+
+@{
+    ViewData["Title"] = "待辦事項清單";
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="mb-4">
+                <i class="bi bi-list-check"></i> 待辦事項清單
+            </h1>
+            <p>
+                <a asp-action="Create" class="btn btn-primary">
+                    <i class="bi bi-plus-circle"></i> 新增待辦事項
+                </a>
+            </p>
+
+            @if (!Model.Any())
+            {
+                <div class="alert alert-info" role="alert">
+                    <i class="bi bi-info-circle"></i> 目前沒有待辦事項。點擊上方按鈕新增第一個待辦事項！
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>進行中 (@Model.Count(t => !t.IsCompleted))</h3>
+                        @foreach (var item in Model.Where(t => !t.IsCompleted))
+                        {
+                            <div class="card mb-3">
+                                <div class="card-body">
+                                    <h5 class="card-title">@item.Title</h5>
+                                    @if (!string.IsNullOrEmpty(item.Description))
+                                    {
+                                        <p class="card-text">@item.Description</p>
+                                    }
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            建立時間: @item.CreatedAt.ToString("yyyy-MM-dd HH:mm")
+                                        </small>
+                                    </p>
+                                    <div class="btn-group" role="group">
+                                        <form asp-action="ToggleComplete" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button type="submit" class="btn btn-success btn-sm">
+                                                <i class="bi bi-check-circle"></i> 完成
+                                            </button>
+                                        </form>
+                                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning btn-sm ms-1">
+                                            <i class="bi bi-pencil"></i> 編輯
+                                        </a>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm ms-1">
+                                            <i class="bi bi-trash"></i> 刪除
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                    <div class="col-md-6">
+                        <h3>已完成 (@Model.Count(t => t.IsCompleted))</h3>
+                        @foreach (var item in Model.Where(t => t.IsCompleted))
+                        {
+                            <div class="card mb-3 bg-light">
+                                <div class="card-body">
+                                    <h5 class="card-title text-decoration-line-through">@item.Title</h5>
+                                    @if (!string.IsNullOrEmpty(item.Description))
+                                    {
+                                        <p class="card-text text-muted">@item.Description</p>
+                                    }
+                                    <p class="card-text">
+                                        <small class="text-muted">
+                                            完成時間: @item.CompletedAt?.ToString("yyyy-MM-dd HH:mm")
+                                        </small>
+                                    </p>
+                                    <div class="btn-group" role="group">
+                                        <form asp-action="ToggleComplete" method="post" class="d-inline">
+                                            @Html.AntiForgeryToken()
+                                            <input type="hidden" name="id" value="@item.Id" />
+                                            <button type="submit" class="btn btn-secondary btn-sm">
+                                                <i class="bi bi-arrow-counterclockwise"></i> 取消完成
+                                            </button>
+                                        </form>
+                                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm ms-1">
+                                            <i class="bi bi-trash"></i> 刪除
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
